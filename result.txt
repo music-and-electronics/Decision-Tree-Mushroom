@@ -1,0 +1,238 @@
+cap_shape:
+        x[p]:1708
+        x[e]:1947
+        b[e]:404
+        b[p]:47
+        s[e]:32
+        f[e]:1596
+        f[p]:1555
+        k[e]:228
+        k[p]:599
+        c[p]:4
+cap_surface:
+        s[p]:1412
+        s[e]:1143
+        y[p]:1740
+        y[e]:1503
+        f[e]:1560
+        f[p]:759
+        g[p]:4
+cap_color:
+        n[p]:1020
+        n[e]:1263
+        y[e]:400
+        y[p]:671
+        w[e]:720
+        w[p]:319
+        g[e]:1032
+        g[p]:807
+        e[e]:624
+        e[p]:875
+        p[p]:88
+        p[e]:55
+        b[e]:48
+        b[p]:119
+        u[e]:16
+        c[e]:32
+        c[p]:11
+        r[e]:16
+bruises:
+        t[p]:624
+        t[e]:2751
+        f[e]:1456
+        f[p]:3291
+odor:
+        p[p]:256
+        a[e]:400
+        l[e]:400
+        n[e]:3408
+        n[p]:119
+        f[p]:2160
+        c[p]:192
+        y[p]:576
+        s[p]:576
+        m[p]:36
+gill_attachment:
+        f[p]:3898
+        f[e]:4015
+        a[e]:192
+        a[p]:17
+gill_spacing:
+        c[p]:3804
+        c[e]:3007
+        w[e]:1200
+        w[p]:111
+gill_size:
+        n[p]:2224
+        n[e]:287
+        b[e]:3920
+        b[p]:1691
+gill_color:
+        k[p]:64
+        k[e]:343
+        n[e]:936
+        n[p]:111
+        g[e]:248
+        g[p]:503
+        p[p]:640
+        p[e]:851
+        w[e]:956
+        w[p]:245
+        h[e]:204
+        h[p]:527
+        u[e]:444
+        u[p]:47
+        e[e]:96
+        b[p]:1728
+        r[p]:24
+        y[e]:64
+        y[p]:21
+        o[e]:64
+stalk_shape:
+        e[p]:1900
+        e[e]:1615
+        t[e]:2592
+        t[p]:2015
+stalk_root:
+        e[p]:256
+        e[e]:863
+        c[e]:512
+        c[p]:43
+        b[e]:1920
+        b[p]:1855
+        r[e]:192
+        ?[e]:720
+        ?[p]:1759
+stalk_surface_above_ring:
+        s[p]:1536
+        s[e]:3639
+        f[e]:408
+        f[p]:143
+        k[p]:2228
+        k[e]:143
+        y[p]:8
+        y[e]:15
+stalk_surface_below_ring:
+        s[p]:1536
+        s[e]:3399
+        f[e]:456
+        f[p]:143
+        y[e]:208
+        y[p]:75
+        k[p]:2160
+        k[e]:143
+stalk_color_above_ring:
+        w[p]:1712
+        w[e]:2751
+        g[e]:576
+        p[e]:576
+        p[p]:1295
+        n[p]:432
+        n[e]:15
+        b[p]:432
+        e[e]:96
+        o[e]:192
+        c[p]:36
+        y[p]:8
+stalk_color_below_ring:
+        w[p]:1680
+        w[e]:2703
+        p[e]:576
+        p[p]:1295
+        g[e]:576
+        b[p]:432
+        n[p]:448
+        n[e]:63
+        e[e]:96
+        y[p]:24
+        o[e]:192
+        c[p]:36
+veil_type:
+        p[p]:3916
+        p[e]:4207
+veil_color:
+        w[p]:3908
+        w[e]:4015
+        n[e]:96
+        o[e]:96
+        y[p]:8
+ring_number:
+        o[p]:3808
+        o[e]:3679
+        t[e]:528
+        t[p]:71
+        n[p]:36
+ring_type:
+        p[p]:816
+        p[e]:3151
+        e[e]:1008
+        e[p]:1767
+        l[p]:1296
+        f[e]:48
+        n[p]:36
+spore_print_color:
+        k[p]:224
+        k[e]:1647
+        n[e]:1744
+        n[p]:223
+        u[e]:48
+        h[p]:1584
+        h[e]:47
+        w[e]:576
+        w[p]:1811
+        r[p]:72
+        o[e]:48
+        y[e]:48
+        b[e]:48
+population:
+        s[p]:368
+        s[e]:879
+        n[e]:400
+        a[e]:384
+        v[p]:2848
+        v[e]:1191
+        y[e]:1064
+        y[p]:647
+        c[e]:288
+        c[p]:51
+habitat:
+        u[p]:272
+        u[e]:95
+        g[e]:1408
+        g[p]:739
+        m[e]:256
+        m[p]:35
+        d[e]:1880
+        d[p]:1267
+        p[e]:136
+        p[p]:1007
+        w[e]:192
+        l[p]:592
+        l[e]:239
+
+total count : 8124
+p : 3916
+e : 4208
+
+cap_shape : 0.0494910468734541
+cap_surface : 0.0290678383773576
+cap_color : 0.0371536088100747
+bruises : 0.192480828166245
+odor : 0.906676105863095
+gill_attachment : 0.0147263830676388
+gill_spacing : 0.101466088329171
+gill_size : 0.230752233277064
+gill_color : 0.418576545340604
+stalk_shape : 0.00780168093459299
+stalk_root : 0.135503144902994
+stalk_surface_above_ring : 0.285599243353401
+stalk_surface_below_ring : 0.272942492016063
+stalk_color_above_ring : 0.254593627512037
+stalk_color_below_ring : 0.241937213668062
+veil_type : 0.000116831385483795
+veil_color : 0.0239377150632074
+ring_number : 0.0389564519319978
+ring_type : 0.318142538495663
+spore_print_color : 0.481790885791123
+population : 0.202744427349426
+habitat : 0.158041193804039
