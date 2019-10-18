@@ -6,15 +6,24 @@ namespace DT_SQL
 {
     class Data_Transportation
     {
-        private MySqlConnection sqlConnection = new MySqlConnection("SERVER=192.168.0.52;DATABASE=study;Uid=john;PWD=Artec100;");
+        private MySqlConnection sqlConnection ;
         private List<string> Field_names = new List<string>();
         public Dictionary<string, List<char[]>> Data_from_table = new Dictionary<string, List<char[]>>();
         public Dictionary<char, int> Total_judgement_field_dictionary = new Dictionary<char, int>();
         public int Total_count { get; set; }
         public Data_Transportation()
         {
+            SQL_Connection();
             Get_Field_Names();
             Bring_Data_From_Table();
+        }
+        private void SQL_Connection()
+        {
+            Console.Write("Server:");
+            string IP=Console.ReadLine();
+            Console.Write("PWD:");
+            string PWD=Console.ReadLine();
+            sqlConnection= new MySqlConnection($"SERVER={IP};DATABASE=study;Uid=john;PWD={PWD};");
         }
 
         private void Get_Field_Names()
@@ -219,7 +228,8 @@ namespace DT_SQL
     {
         static void Main(string[] args)
         {
-            DT_Calculation calculation= new DT_Calculation();   
+            DT_Calculation calculation= new DT_Calculation();
+            Console.Write("");
         }
     }
 }
