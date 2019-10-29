@@ -12,7 +12,6 @@ namespace DT_SQL
         public Dictionary<char, int> Total_judgement_field_dictionary = new Dictionary<char, int>();
         public int Total_count { get; set; }
 
-
         public Data_Transportation()
         {
             SQL_Connection();
