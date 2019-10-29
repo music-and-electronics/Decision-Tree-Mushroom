@@ -11,12 +11,15 @@ namespace DT_SQL
         public Dictionary<string, List<char[]>> Data_from_table = new Dictionary<string, List<char[]>>();
         public Dictionary<char, int> Total_judgement_field_dictionary = new Dictionary<char, int>();
         public int Total_count { get; set; }
+
+
         public Data_Transportation()
         {
             SQL_Connection();
             Get_Field_Names();
             Bring_Data_From_Table();
         }
+
         private void SQL_Connection()
         {
             Console.Write("Server:");
