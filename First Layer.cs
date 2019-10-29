@@ -6,26 +6,37 @@ namespace DT_SQL
 {
     class Data_Transportation
     {
-        private MySqlConnection sqlConnection = new MySqlConnection("SERVER=192.168.0.52;DATABASE=study;Uid=john;PWD=Artec100;");
+        private MySqlConnection sqlConnection;
         private List<string> Field_names = new List<string>();
         public Dictionary<string, List<char[]>> Data_from_table = new Dictionary<string, List<char[]>>();
         public Dictionary<char, int> Total_judgement_field_dictionary = new Dictionary<char, int>();
         public int Total_count { get; set; }
+
         public Data_Transportation()
         {
+            SQL_Connection();
             Get_Field_Names();
             Bring_Data_From_Table();
+        }
+
+        private void SQL_Connection()
+        {
+            Console.Write("Server:");
+            string IP = Console.ReadLine();
+            Console.Write("PWD:");
+            string PWD = Console.ReadLine();
+            sqlConnection = new MySqlConnection($"SERVER={IP};DATABASE=study;Uid=john;PWD={PWD};");
         }
 
         private void Get_Field_Names()
         {
             sqlConnection.Open();
-            
+
             string search_query = "SHOW COLUMNS FROM mushroom_table";
 
             MySqlDataReader sqlSearchResult;
             MySqlCommand sqlCommand = new MySqlCommand(search_query, sqlConnection);
-            sqlSearchResult         = sqlCommand.ExecuteReader();
+            sqlSearchResult = sqlCommand.ExecuteReader();
 
             while (sqlSearchResult.Read())
             {
@@ -63,14 +74,14 @@ namespace DT_SQL
                 }
 
                 //Case to parse total judgement which is used for total gain calculation
-                else if (field_name=="class")
+                else if (field_name == "class")
                 {
                     string search_query = $"SELECT class FROM mushroom_table";
 
                     MySqlDataReader sqlSearchResult;
 
                     MySqlCommand sqlCommand = new MySqlCommand(search_query, sqlConnection);
-                    sqlSearchResult         = sqlCommand.ExecuteReader();
+                    sqlSearchResult = sqlCommand.ExecuteReader();
 
                     int total_count = 0;
 
@@ -98,9 +109,10 @@ namespace DT_SQL
         }
     }
 
-    class DT_Calculation 
+    class DT_Calculation
     {
-        Dictionary<string, Dictionary<char, Dictionary<char, int>>> complete_data_set_for_DT = new Dictionary<string, Dictionary<char, Dictionary<char, int>>>();
+        Dictionary<string, Dictionary<char, Dictionary<char, int>>> complete_data_set_for_DT
+        = new Dictionary<string, Dictionary<char, Dictionary<char, int>>>();
 
         Data_Transportation data_from_DB = new Data_Transportation();
 
@@ -126,7 +138,7 @@ namespace DT_SQL
                         if (field_data_set.ContainsKey(list_data_set[0]) == false)
                         {
                             Dictionary<char, int> value = new Dictionary<char, int>();
-                            value[list_data_set[1]]  = 1;
+                            value[list_data_set[1]] = 1;
                             field_data_set.Add(list_data_set[0], value);
                         }
 
@@ -144,13 +156,13 @@ namespace DT_SQL
                         }
                     }
                 }
-                complete_data_set_for_DT.Add(value_from_dataset.Key,field_data_set);
+                complete_data_set_for_DT.Add(value_from_dataset.Key, field_data_set);
             }
         }
 
         private double Entropy(double probabililty)
         {
-            return -probabililty*Math.Log(probabililty,2);
+            return -probabililty * Math.Log(probabililty, 2);
         }
 
         private double Calculate_Gain(Dictionary<char, Dictionary<char, int>> Calculation_Data)
@@ -160,19 +172,19 @@ namespace DT_SQL
             double total_probability2 = (double)data_from_DB.Total_judgement_field_dictionary['e'] / (double)data_from_DB.Total_count;
 
             //전체 데이터에 대한 게인 계산
-            double gain_result        = -total_probability1 * Math.Log(total_probability1, 2) - total_probability2 * Math.Log(total_probability2, 2);
+            double gain_result = -total_probability1 * Math.Log(total_probability1, 2) - total_probability2 * Math.Log(total_probability2, 2);
 
             foreach (var data in Calculation_Data)
             {
-                
+
                 if (Calculation_Data[data.Key].ContainsKey('p') == true && Calculation_Data[data.Key].ContainsKey('e') == true)
                 {
                     //해당 field에 대한 게인 계산
-                    double sum           = (double)Calculation_Data[data.Key]['p'] + (double)Calculation_Data[data.Key]['e'];
-                    double probability1  = (double)Calculation_Data[data.Key]['p'] / sum;
-                    double probability2  = (double)Calculation_Data[data.Key]['e'] / sum;
-                    double gain          = (sum / (double)data_from_DB.Total_count) * (Entropy(probability1)+Entropy(probability2));
-                    gain_result         -= gain;
+                    double sum = (double)Calculation_Data[data.Key]['p'] + (double)Calculation_Data[data.Key]['e'];
+                    double probability1 = (double)Calculation_Data[data.Key]['p'] / sum;
+                    double probability2 = (double)Calculation_Data[data.Key]['e'] / sum;
+                    double gain = (sum / (double)data_from_DB.Total_count) * (Entropy(probability1) + Entropy(probability2));
+                    gain_result -= gain;
                 }
             }
             return gain_result;
@@ -209,17 +221,11 @@ namespace DT_SQL
                 Console.WriteLine($"{data.Key} : {data.Value}");
             }
 
-            foreach (KeyValuePair<string, double> data in gain_results)
+            foreach (KeyValuePair<string, double> gain_result in gain_results)
             {
-                Console.WriteLine($"{data.Key} : {data.Value}");
+                Console.WriteLine($"{gain_result.Key} : {gain_result.Value}");
             }
         }
     }
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            DT_Calculation calculation= new DT_Calculation();   
-        }
-    }
+
 }
