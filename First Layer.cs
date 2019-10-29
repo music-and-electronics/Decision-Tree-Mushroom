@@ -1,41 +1,32 @@
 ﻿using System;
 using MySql.Data.MySqlClient;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace DT_SQL
 {
-    class Data_Transportation
+    class Fisrt_Layer_Data_Transportation
     {
-        private MySqlConnection sqlConnection;
+        private DataBase DB = new DataBase();
         private List<string> Field_names = new List<string>();
         public Dictionary<string, List<char[]>> Data_from_table = new Dictionary<string, List<char[]>>();
         public Dictionary<char, int> Total_judgement_field_dictionary = new Dictionary<char, int>();
         public int Total_count { get; set; }
 
-        public Data_Transportation()
+        public Fisrt_Layer_Data_Transportation()
         {
-            SQL_Connection();
             Get_Field_Names();
             Bring_Data_From_Table();
         }
 
-        private void SQL_Connection()
-        {
-            Console.Write("Server:");
-            string IP = Console.ReadLine();
-            Console.Write("PWD:");
-            string PWD = Console.ReadLine();
-            sqlConnection = new MySqlConnection($"SERVER={IP};DATABASE=study;Uid=john;PWD={PWD};");
-        }
-
         private void Get_Field_Names()
         {
-            sqlConnection.Open();
+            DB.sqlConnection.Open();
 
             string search_query = "SHOW COLUMNS FROM mushroom_table";
 
             MySqlDataReader sqlSearchResult;
-            MySqlCommand sqlCommand = new MySqlCommand(search_query, sqlConnection);
+            MySqlCommand sqlCommand = new MySqlCommand(search_query,DB.sqlConnection);
             sqlSearchResult = sqlCommand.ExecuteReader();
 
             while (sqlSearchResult.Read())
@@ -43,14 +34,14 @@ namespace DT_SQL
                 Field_names.Add(sqlSearchResult.GetString(0));
             }
 
-            sqlConnection.Close();
+            DB.sqlConnection.Close();
         }
 
         private void Bring_Data_From_Table()
         {
             foreach (string field_name in Field_names)
             {
-                sqlConnection.Open();
+                DB.sqlConnection.Open();
 
                 //Case to parse general field data
                 if (field_name != "class" && field_name != "idx")
@@ -58,7 +49,7 @@ namespace DT_SQL
                     string search_query = $"SELECT {field_name},{Field_names[1]} FROM mushroom_table";
 
                     MySqlDataReader sqlSearchResult;
-                    MySqlCommand sqlCommand = new MySqlCommand(search_query, sqlConnection);
+                    MySqlCommand sqlCommand = new MySqlCommand(search_query,DB.sqlConnection);
                     sqlSearchResult = sqlCommand.ExecuteReader();
                     List<char[]> field_data = new List<char[]>();
 
@@ -80,7 +71,7 @@ namespace DT_SQL
 
                     MySqlDataReader sqlSearchResult;
 
-                    MySqlCommand sqlCommand = new MySqlCommand(search_query, sqlConnection);
+                    MySqlCommand sqlCommand = new MySqlCommand(search_query,DB.sqlConnection);
                     sqlSearchResult = sqlCommand.ExecuteReader();
 
                     int total_count = 0;
@@ -104,19 +95,21 @@ namespace DT_SQL
                     Total_count = total_count;
                 }
 
-                sqlConnection.Close();
+                DB.sqlConnection.Close();
             }
         }
     }
 
-    class DT_Calculation
+    public class First_Layer_DT_Calculation
     {
         Dictionary<string, Dictionary<char, Dictionary<char, int>>> complete_data_set_for_DT
         = new Dictionary<string, Dictionary<char, Dictionary<char, int>>>();
 
-        Data_Transportation data_from_DB = new Data_Transportation();
+        public Dictionary<string, double> gain_results = new Dictionary<string, double>();
+        Fisrt_Layer_Data_Transportation data_from_DB = new Fisrt_Layer_Data_Transportation();
 
-        public DT_Calculation()
+
+        public First_Layer_DT_Calculation()
         {
             Mapping_mushroom_data_set();
             Print_All_Result(complete_data_set_for_DT);
@@ -180,11 +173,11 @@ namespace DT_SQL
                 if (Calculation_Data[data.Key].ContainsKey('p') == true && Calculation_Data[data.Key].ContainsKey('e') == true)
                 {
                     //해당 field에 대한 게인 계산
-                    double sum = (double)Calculation_Data[data.Key]['p'] + (double)Calculation_Data[data.Key]['e'];
+                    double sum          = (double)Calculation_Data[data.Key]['p'] + (double)Calculation_Data[data.Key]['e'];
                     double probability1 = (double)Calculation_Data[data.Key]['p'] / sum;
                     double probability2 = (double)Calculation_Data[data.Key]['e'] / sum;
-                    double gain = (sum / (double)data_from_DB.Total_count) * (Entropy(probability1) + Entropy(probability2));
-                    gain_result -= gain;
+                    double gain         = (sum / (double)data_from_DB.Total_count) * (Entropy(probability1) + Entropy(probability2));
+                    gain_result        -= gain;
                 }
             }
             return gain_result;
@@ -193,7 +186,6 @@ namespace DT_SQL
         //Dictionary에 저장된 데이터와 게인 계산 결과를 출력하는 함수
         private void Print_All_Result(Dictionary<string, Dictionary<char, Dictionary<char, int>>> complete_data_set_for_DT)
         {
-            Dictionary<string, double> gain_results = new Dictionary<string, double>();
 
             foreach (KeyValuePair<string, Dictionary<char, Dictionary<char, int>>> mushroom_field in complete_data_set_for_DT)
             {
@@ -226,6 +218,24 @@ namespace DT_SQL
                 Console.WriteLine($"{gain_result.Key} : {gain_result.Value}");
             }
         }
+
+        public string Return_Max_Value()
+        {
+
+            string max_gain_key = "";
+
+            foreach (KeyValuePair<string, double> gain_result in gain_results)
+            {
+                if(gain_results.Values.Max()==gain_result.Value)
+                {
+                    max_gain_key= gain_result.Key;
+                }
+            }
+
+            return max_gain_key;
+
+        }
+          
     }
 
 }

@@ -48,9 +48,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataBase.cs" />
     <Compile Include="First Layer.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Second Layer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
