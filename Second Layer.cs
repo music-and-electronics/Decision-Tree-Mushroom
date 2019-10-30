@@ -10,7 +10,6 @@ namespace DT_SQL
         public Dictionary<string, List<char[]>> Data_from_table = new Dictionary<string, List<char[]>>();
         public Dictionary<char, int> Total_judgement_field_dictionary = new Dictionary<char, int>();
         public int Total_count { get; set; }
-
         private string max_gain_key { get; set; }
 
         public Second_Layer_Data_Transportation(string max_gain_key)
@@ -36,7 +35,7 @@ namespace DT_SQL
 
             DB.sqlConnection.Close();
         }
-
+        
         private void Bring_Data_From_Table()
         {
             foreach (string field_name in Field_names)
@@ -99,11 +98,11 @@ namespace DT_SQL
             }
         }
     }
+
     public class Second_Layer_DT_Caculation
     {
         private string max_gain_key { get; set; }
         Second_Layer_Data_Transportation second_Layer;
-
         public Second_Layer_DT_Caculation(string max_gain_key)
         {
             this.max_gain_key = max_gain_key;
