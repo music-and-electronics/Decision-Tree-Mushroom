@@ -35,7 +35,7 @@ namespace DT_SQL
 
             DB.sqlConnection.Close();
         }
-        
+
         private void Bring_Data_From_Table()
         {
             foreach (string field_name in Field_names)
@@ -45,18 +45,18 @@ namespace DT_SQL
                 //Case to parse general field data
                 if (field_name != "class" && field_name != "idx" && field_name != max_gain_key)
                 {
-                    string search_query = $"SELECT {field_name},{Field_names[1]} FROM mushroom_table";
+                    string search_query = $"SELECT {field_name},class FROM mushroom_table";
 
                     MySqlDataReader sqlSearchResult;
                     MySqlCommand sqlCommand = new MySqlCommand(search_query, DB.sqlConnection);
-                    sqlSearchResult = sqlCommand.ExecuteReader();
+                    sqlSearchResult         = sqlCommand.ExecuteReader();
                     List<char[]> field_data = new List<char[]>();
 
                     while (sqlSearchResult.Read())
                     {
                         char[] field_data_set = new char[2];
-                        field_data_set[0] = sqlSearchResult.GetChar(0);
-                        field_data_set[1] = sqlSearchResult.GetChar(1);
+                        field_data_set[0]     = sqlSearchResult.GetChar(0);
+                        field_data_set[1]     = sqlSearchResult.GetChar(1);
                         field_data.Add(field_data_set);
                     }
 
@@ -64,36 +64,31 @@ namespace DT_SQL
                 }
 
                 //Case to parse total judgement which is used for total gain calculation
-                else if (field_name == "class")
+                else 
                 {
-                    string search_query = $"SELECT {field_name} FROM mushroom_table";
+                    string search_query = $"SELECT class,{max_gain_key} FROM mushroom_table";
 
                     MySqlDataReader sqlSearchResult;
 
                     MySqlCommand sqlCommand = new MySqlCommand(search_query, DB.sqlConnection);
-                    sqlSearchResult = sqlCommand.ExecuteReader();
+                    sqlSearchResult         = sqlCommand.ExecuteReader();
 
                     int total_count = 0;
 
                     while (sqlSearchResult.Read())
                     {
-
                         if (Total_judgement_field_dictionary.ContainsKey(sqlSearchResult.GetChar(0)) == false)
                         {
                             Total_judgement_field_dictionary.Add(sqlSearchResult.GetChar(0), 1);
                         }
-
                         else
                         {
                             Total_judgement_field_dictionary[sqlSearchResult.GetChar(0)]++;
                         }
-
                         total_count++;
                     }
-
                     Total_count = total_count;
                 }
-
                 DB.sqlConnection.Close();
             }
         }
